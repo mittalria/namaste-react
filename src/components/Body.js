@@ -2,6 +2,7 @@ import RestrauntCard from "./RestrauntCard";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import { RESTRAUNTS_API } from "../utils/constants";
 
 const Body = () => {
   const [listOfRestraunts, setListOfRestraunts] = useState([]);
@@ -13,17 +14,16 @@ const Body = () => {
   }, []);
 
   const fetchData = async () => {
-    const data = await fetch(
-      "https://corsproxy.io/?https://www.swiggy.com/dapi/restaurants/list/v5?lat=28.7040592&lng=77.10249019999999&collection=80382&tags=layout_CCS_CholeBhature&sortBy=&filters=&type=rcv2&offset=0&page_type=null",
-    );
+    const data = await fetch(RESTRAUNTS_API);
 
     const json = await data.json();
-    const filteredJson = (json?.data?.cards).filter(
-      (item) => item?.card?.card.info,
-    );
 
-    setListOfRestraunts(filteredJson);
-    setFilteredRestraunts(filteredJson);
+    const restrauntList =
+      json?.data?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle
+        ?.restaurants;
+
+    setListOfRestraunts(restrauntList);
+    setFilteredRestraunts(restrauntList);
   };
 
   return listOfRestraunts.length === 0 ? (
@@ -43,7 +43,7 @@ const Body = () => {
           <button
             onClick={() => {
               const filteredRestraunt = listOfRestraunts.filter((res) =>
-                res?.card?.card?.info?.name
+                res?.info?.name
                   .toLowerCase()
                   .includes(searchText.toLowerCase()),
               );
@@ -57,7 +57,7 @@ const Body = () => {
           className="filter-btn"
           onClick={() => {
             const filteredList = listOfRestraunts.filter(
-              (res) => res?.card?.card?.info?.avgRating > 4,
+              (res) => res?.info?.avgRating > 4,
             );
             setListOfRestraunts(filteredList);
           }}
@@ -67,8 +67,11 @@ const Body = () => {
       </div>
       <div className="res-container">
         {filteredRestraunts.map((restraunt) => (
-          <Link to="/restaurants/123" key={restraunt?.card?.card?.info?.id}>
-            <RestrauntCard resData={restraunt?.card?.card} />
+          <Link
+            to={"/restaurants/" + restraunt?.info?.id}
+            key={restraunt?.info?.id}
+          >
+            <RestrauntCard resData={restraunt} />
           </Link>
         ))}
       </div>
