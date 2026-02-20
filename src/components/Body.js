@@ -3,12 +3,14 @@ import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { RESTRAUNTS_API } from "../utils/constants";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   const [listOfRestraunts, setListOfRestraunts] = useState([]);
   const [searchText, setSearchText] = useState("");
   const [filteredRestraunts, setFilteredRestraunts] = useState([]);
 
+  //shorten it, make a custom hook and remove fetch logic
   useEffect(() => {
     fetchData();
   }, []);
@@ -25,6 +27,11 @@ const Body = () => {
     setListOfRestraunts(restrauntList);
     setFilteredRestraunts(restrauntList);
   };
+
+  const onlineStatus = useOnlineStatus();
+
+  if (!onlineStatus)
+    return <h1>Looks like you are offline!! Check your internet connection</h1>;
 
   return listOfRestraunts.length === 0 ? (
     <Shimmer />
