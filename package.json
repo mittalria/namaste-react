@@ -21,9 +21,14 @@
     "parcel": "^2.16.3",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",
-    "react-router-dom": "^6.30.3"
+    "react-router-dom": "^6.30.3",
+    "tailwindcss": "^4.2.1"
   },
   "browserslist": [
     "last 2 versions"
-  ]
+  ],
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.2.1",
+    "autoprefixer": "^10.4.24"
+  }
 }
