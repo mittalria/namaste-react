@@ -2,7 +2,6 @@ import { CDN_URL } from "../utils/constants";
 
 const RestrauntCard = (props) => {
   const { resData } = props;
-  console.log(resData)
 
   return (
     <div className="m-4 p-4 w-56 rounded-lg bg-gray-100 hover:bg-gray-200">

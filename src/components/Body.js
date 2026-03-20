@@ -1,9 +1,10 @@
 import RestrauntCard, { withPromotedLabel } from "./RestrauntCard";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
 import { RESTRAUNTS_API } from "../utils/constants";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import UserContext from "../utils/userContext";
 
 const Body = () => {
   const [listOfRestraunts, setListOfRestraunts] = useState([]);
@@ -36,11 +37,13 @@ const Body = () => {
   if (!onlineStatus)
     return <h1>Looks like you are offline!! Check your internet connection</h1>;
 
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
   return listOfRestraunts.length === 0 ? (
     <Shimmer />
   ) : (
-    <div className="body">
-      <div className="filter">
+    <div>
+      <div className="flex">
         <div className="m-4 p-4">
           <input
             type="text"
@@ -63,17 +66,27 @@ const Body = () => {
           >
             Search
           </button>
+        </div>
+        <div className="m-4 p-4 flex">
           <button
-            className="px-4 py-2 bg-gray-100 cursor-pointer"
+            className="px-4 py-2 m-4 cursor-pointer rounded-lg bg-amber-300"
             onClick={() => {
               const filteredList = listOfRestraunts.filter(
-                (res) => res?.info?.avgRating > 4,
+                (res) => res?.info?.avgRating > 4.5,
               );
               setListOfRestraunts(filteredList);
             }}
           >
             Top Rated Restraunts
           </button>
+          <div className="px-4 py-2 m-4 flex">
+            <label>Username: </label>
+            <input
+              className="border border-black"
+              value={loggedInUser}
+              onChange={(e) => setUserName(e.target.value)}
+            />
+          </div>
         </div>
       </div>
       <div className="flex flex-wrap">
