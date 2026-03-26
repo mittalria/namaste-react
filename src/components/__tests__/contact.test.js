@@ -2,34 +2,36 @@ import { render, screen } from "@testing-library/react";
 import Contact from "../Contact";
 import "@testing-library/jest-dom";
 
-test("Should load contact us component", () => {
-  render(<Contact />);
+describe("Contact Us Page test cases", () => {
+  it("Should load contact us component", () => {//it and test are same
+    render(<Contact />);
 
-  const heading = screen.getByRole("heading");
+    const heading = screen.getByRole("heading");
 
-  expect(heading).toBeInTheDocument();
-});
+    expect(heading).toBeInTheDocument();
+  });
 
-test("Should load button inside contact us component", () => {
-  render(<Contact />);
+  it("Should load button inside contact us component", () => {
+    render(<Contact />);
 
-  const button = screen.getByText("Submit");
+    const button = screen.getByText("Submit");
 
-  expect(button).toBeInTheDocument();
-});
+    expect(button).toBeInTheDocument();
+  });
 
-test("Should load input name inside contact us component", () => {
-  render(<Contact />);
+  test("Should load input name inside contact us component", () => {
+    render(<Contact />);
 
-  const inputName = screen.getByPlaceholderText("name");
+    const inputName = screen.getByPlaceholderText("name");
 
-  expect(inputName).toBeInTheDocument();
-});
+    expect(inputName).toBeInTheDocument();
+  });
 
-test("Should load two input boxes inside contact us component", () => {
-  render(<Contact />);
+  test("Should load two input boxes inside contact us component", () => {
+    render(<Contact />);
 
-  const inputBoxes = screen.getAllByRole("textbox");
+    const inputBoxes = screen.getAllByRole("textbox");
 
-  expect(inputBoxes.length).toBe(2);
+    expect(inputBoxes.length).toBe(2);
+  });
 });
