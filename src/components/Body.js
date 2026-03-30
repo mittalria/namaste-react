@@ -48,6 +48,7 @@ const Body = () => {
           <input
             type="text"
             className="border border-solid"
+            data-testid="searchInput"
             value={searchText}
             onChange={(e) => {
               setSearchText(e.target.value);
@@ -69,12 +70,13 @@ const Body = () => {
         </div>
         <div className="m-4 p-4 flex">
           <button
+            data-testid="topRatedRestraunts"
             className="px-4 py-2 m-4 cursor-pointer rounded-lg bg-amber-300"
             onClick={() => {
               const filteredList = listOfRestraunts.filter(
-                (res) => res?.info?.avgRating > 4.5,
+                (res) => res?.info?.avgRating >= 4.7,
               );
-              setListOfRestraunts(filteredList);
+              setFilteredRestraunts(filteredList);
             }}
           >
             Top Rated Restraunts
